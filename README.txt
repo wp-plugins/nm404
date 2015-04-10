@@ -8,8 +8,6 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-no more 404
-
 Avoids any 404 errors on your Wordpress-Site by redirecting the request to the closest match found in the sitemap.xml
 
 * Requires sitemap.xml
