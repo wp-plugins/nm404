@@ -8,8 +8,10 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Avoids any 404 errors on your Wordpress-Site by redirecting the request to the closest match found in the sitemap.xml
+== Description ==
 
-* Requires sitemap.xml
+Avoid any 404 errors on your Wordpress-Site by redirecting the request to the closest match found in the sitemap.xml.
+
+*   sitemap.xml required
 
 Just install and activate the plugin. nm404 don't need any further configuration.
