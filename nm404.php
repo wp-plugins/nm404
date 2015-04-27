@@ -4,7 +4,7 @@
 Plugin Name:    nm404
 Plugin URI:     http://www.affiliate-solutions.biz/
 Description:    redirect 404 error to the closest matches found in the sitemap.xml
-Version:        1.0.0
+Version:        1.0.1
 Author:         Affiliate solutions SLU
 Author URI:     http://www.affiliate-solutions.biz/
 */
@@ -13,14 +13,24 @@ Author URI:     http://www.affiliate-solutions.biz/
 class Redirector404{
 
     private $_sitemap ="/sitemap.xml";
+    private $parse_limit=null;
 
     private $prot="http://";
     private $distance=-1;
     private $redirect=null;
+    private $settings=null;
     private $url;
 
     function __construct() {
         add_action('template_redirect', array ($this, 'check'));
+        $this->settings=maybe_unserialize(get_option('NM404settings'));
+        if(!empty($this->settings["sitemap_url"])){
+            $this->_sitemap=$this->settings["sitemap_url"];
+        }
+        if(!empty($this->settings["limit_parsed_entries"])
+            && $this->settings["limit_parsed_entries"]>0){
+            $this->parse_limit=$this->settings["limit_parsed_entries"];
+        }
     }
 
     function check(){
@@ -28,7 +38,13 @@ class Redirector404{
             $this->url=$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
             $this->setProt();
             $this->redirect=$this->prot.$_SERVER['SERVER_NAME'];
-            $this->sitemap=$this->prot.$_SERVER['SERVER_NAME'].$this->_sitemap;
+            $url=parse_url($this->_sitemap);
+            if($url["host"]=="") {
+                $this->sitemap = $this->prot . $_SERVER['SERVER_NAME'] . $this->_sitemap;
+            }
+            else{
+                $this->sitemap= $this->_sitemap;
+            }
             $this->parseSitemap();
             $this->redirect();
        }
@@ -47,7 +63,6 @@ class Redirector404{
         $dom = new DOMDocument;
         $dom->load($this->sitemap);
         $sitemaps=$dom->getElementsByTagName('sitemap')->length;
-        $urls=$dom->getElementsByTagName('url')->length;
         if($sitemaps >0){
             $submaps=$this->getSubmaps($dom);
             foreach($submaps as $submap){
@@ -71,8 +86,12 @@ class Redirector404{
     private function getShortest($sitemap){
         $dom = new DOMDocument;
         $dom->load((string)$sitemap);
+        $i=0;
         foreach($dom->getElementsByTagName('url') as $child){
             foreach($child->getElementsByTagName('loc') as $url){
+                if($this->parse_limit>0 && ++$i>$this->parse_limit){
+                    return;
+                }
                 $loc=(string)$url->nodeValue;
                 $lev = levenshtein($this->url, $loc);
 
@@ -92,5 +111,12 @@ class Redirector404{
 }
 
 $Redirector404 = new Redirector404();
+
+
+if(is_admin()) {
+    define('NM404_SLUG', plugin_basename(__FILE__));
+    require_once 'admin/NM404_Admin.php';
+    NM404_Admin::init();
+}
 
 ?>
