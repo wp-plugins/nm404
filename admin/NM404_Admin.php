@@ -10,9 +10,7 @@ class NM404_Admin {
             __('NM404'),
             'manage_options',
             'NM404_menu',
-            array('NM404_Admin', 'Settings'),
-            '',
-            ''
+            array('NM404_Admin', 'Settings')
         );
     }
 
