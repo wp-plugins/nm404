@@ -4,7 +4,7 @@
 Plugin Name:    nm404
 Plugin URI:     http://www.affiliate-solutions.biz/
 Description:    redirect 404 error to the closest matches found in the sitemap.xml
-Version:        1.0.2
+Version:        1.0.3
 Author:         Affiliate solutions SLU
 Author URI:     http://www.affiliate-solutions.biz/
 */

@@ -6,12 +6,12 @@ if(empty($settings["sitemap_url"])){
 }
 if(!empty($_POST["sitemap_url"])){
     $url=parse_url($_POST["sitemap_url"]);
-    $options = [
-        'http' => [
+    $options = array(
+        'http' => array(
             'method' => 'GET',
             'timeout' => '5'
-        ]
-    ];
+        )
+    );
     $dom = new DOMDocument;
     $context = stream_context_create($options);
     libxml_set_streams_context($context);
