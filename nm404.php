@@ -4,7 +4,7 @@
 Plugin Name:    nm404
 Plugin URI:     http://www.affiliate-solutions.biz/
 Description:    redirect 404 error to the closest matches found in the sitemap.xml
-Version:        1.0.3
+Version:        1.0.4
 Author:         Affiliate solutions SLU
 Author URI:     http://www.affiliate-solutions.biz/
 */
@@ -36,6 +36,10 @@ class Redirector404{
     function check(){
         if(is_404()){
             $this->url=$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
+            if(strpos($_SERVER['REQUEST_URI'], 'favicon.ico') !== false) {
+                header("HTTP/1.0 404 Not Found");
+                exit;
+            }
             $this->setProt();
             $this->redirect=$this->prot.$_SERVER['SERVER_NAME'];
             $url=parse_url($this->_sitemap);
