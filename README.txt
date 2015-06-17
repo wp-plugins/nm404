@@ -37,8 +37,11 @@ Simply install and activate the plugin. "no more 404" don't need any further con
 
 = Why some redirections seem to take too long? =
 
-For some blogs with more than 10000 articles for example, it could take a little bit to search on that larger sitemap.xml the appropiate match for the request.
+For large blogs with more than 10000 articles for example, it could take a little bit to search on that larger sitemap.xml the appropiate match for the request.
 To avoid a delay you may either cache your sitemap.xml (e.g. through varnish) or put a static sitemap.xml in your document-root.
+**Update**
+Additionally it is now possible to limit the entries to parse from the sitemap.xml to increase speed.
+Depending on the hardware, it is possible to set a limit to maximal 1000 entries.
 
 = Will the plugin get any enhancements in future? =
 
