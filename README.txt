@@ -57,7 +57,6 @@ We are continuously improving this plugin. In future it will be possible to conf
 = 1.0.3 =
 * Backwards compatibility to PHP 5.3
 
-
 = 1.0.2 =
 * Added plugin support for limiting entries to parse from the sitemap.xml to increase speed
 * Minor code tweaks
